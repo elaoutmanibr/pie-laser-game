@@ -31,7 +31,7 @@ unsigned int e = 50;
 
 
 
-//Lecture d'un bit en fonction de la durée du signal mesuré en position haute
+//Interprétation du bit reçu en fonction de la durée du signal mesuré en position haute
 void readBit(unsigned long highRecvDuration) {
   if (zeroDuration - e < highRecvDuration && highRecvDuration < zeroDuration + e) { //On reçoit un 0
     Serial.print("0");
@@ -120,7 +120,7 @@ void checkTrigger() {
 
 
 
-//Détecter les messages entrants
+//Détecter les tirs/messages entrants
 void checkReceiver() {
   receiverState = digitalRead(receiver);
   if (receiverState == 1) { //On capte un signal
@@ -132,7 +132,7 @@ void checkReceiver() {
   else if (receiverState == 0) { //On ne capte pas de signal
     if (lastReceiverState == 1) { //Front descendant
       highRecvDuration = micros() - recvChrono; //Mesure du temps en signal haut
-      readBit(highRecvDuration);
+      readBit(highRecvDuration); //Interprétation du bit reçu
       lastReceiverState = 0;
     }
   }
@@ -145,16 +145,16 @@ void setup() {
   pinMode(receiver, INPUT);
   pinMode(emitter, OUTPUT);
   pinMode(trigger, INPUT);
-  Serial.begin(9600);
+  Serial.begin(9600); //Initialisation de la communication texte
 }
 
 
 
 //Boucle d'exécution
 void loop() {
-  checkReceiver();
-  checkTrigger();
+  checkReceiver(); //Détection de tir/message entrant
+  checkTrigger(); //Détection d'appui sur la gâchette
   if (isSendingPacket) {
-    sendPacket(emitter, id);
+    sendPacket(emitter, id); //Envoi de messages
   }
 }
