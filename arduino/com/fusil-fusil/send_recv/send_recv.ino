@@ -26,8 +26,11 @@ unsigned int oneDuration = 1200;
 unsigned int startDuration = 2400;
 unsigned int endDuration = 1800;
 
+//Fréquence des impulsions (56kHz)
+unsigned int freq = 56000;
+
 //Tolérance dans la durée des impulsions reçues (µs)
-unsigned int e = 50;
+unsigned int e = 200;
 
 
 
@@ -70,13 +73,15 @@ void sendBit(int pin, char bit, int len) {
   if (!isSendingBit && !currentSendState) { //L'envoi du bit n'a pas encore commencé
     isSendingBit = true; //Début de l'envoi du bit
     currentSendState = true;
-    digitalWrite(emitter, HIGH); // Sortie haute
+    //digitalWrite(emitter, HIGH); // Sortie haute
+    tone(emitter, freq);
     sendChrono = micros(); //Réinitialisation du chronomètre
   }
   else if (currentSendState) { //L'envoi du bit a commencé, et la sortie est haute
     if (micros() - sendChrono >= highDuration) { //Fin de la sortie haute
       currentSendState = false;
-      digitalWrite(emitter, LOW); //Sortie basse
+      noTone(emitter);
+      //digitalWrite(emitter, LOW); //Sortie basse
       sendChrono = micros(); //Réinitialisation du chronomètre
     }
   }
@@ -122,7 +127,7 @@ void checkTrigger() {
 
 //Détecter les tirs/messages entrants
 void checkReceiver() {
-  receiverState = digitalRead(receiver);
+  receiverState = 1 - digitalRead(receiver);
   if (receiverState == 1) { //On capte un signal
     if (lastReceiverState == 0) { //Front montant
       recvChrono = micros(); //Réinitialisation du chronomètre
