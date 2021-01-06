@@ -30,7 +30,7 @@ unsigned int endDuration = 1800;
 unsigned int freq = 56000;
 
 //Tolérance dans la durée des impulsions reçues (µs)
-unsigned int e = 200;
+unsigned int e = 250;
 
 
 
