@@ -39,3 +39,7 @@ void Player::setScore(float theScore){
 void Player::setTeam(int theTeam){
   team=theTeam;
 }
+
+int main(){
+  return 0;
+}

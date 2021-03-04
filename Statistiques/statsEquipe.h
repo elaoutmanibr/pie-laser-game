@@ -17,12 +17,12 @@ class Team
   public:
 
     Team();
-    Team(int theId, td::vector<Player*> theMembers, int theSize);
+    Team(int theId, std::vector<Player*> theMembers, int theSize);
 
     void setId(int theId);
     void setMembers(std::vector<Player*> theMembers);
     void setScore(float theScore);
-    void addMember(Player& newPlayer);
+    void addMember(Player* newPlayer);
     void rmMember(int theId);
     void upScore();
 
@@ -31,7 +31,7 @@ class Team
     float getScore();
     int getSize();
 
-}
+};
 
 
 #endif

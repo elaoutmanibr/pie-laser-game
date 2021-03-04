@@ -2,6 +2,7 @@
 #include <string>
 #include <functional>
 #include "statsPerso.h"
+#include "statsEquipe.h"
 
 
 Team::Team() : id(0), members(), score(0), size(0) {}
@@ -21,20 +22,20 @@ void Team::setScore(float theScore){
 }
 
 void Team::addMember(Player *newPlayer){
-  memnbers.resize(size+1);
+  members.resize(size+1);
   size++;
   members.push_back(newPlayer);
-  (*newPlayer).setTeam(this.id);
+  (*newPlayer).setTeam(id);
 }
 
 void Team::rmMember(int theId){
   std::vector<Player*> temp(size-1);
   for(int i=0; i<size; i++){
     if ((*(members[i])).getId()!=theId){
-      temp.push_back(member[i]);
+      temp.push_back(members[i]);
     }
     else{
-      (*(member[i])).setTeam(0);
+      (*(members[i])).setTeam(0);
     }
   }
   members.swap(temp);
@@ -45,7 +46,7 @@ void Team::rmMember(int theId){
 void Team::upScore(){
   float val;
   for(int i=0; i<size; i++){
-      val += *(member[i]).getScore();
+      val += (*(members[i])).getScore();
   }
   score=val;
 }
