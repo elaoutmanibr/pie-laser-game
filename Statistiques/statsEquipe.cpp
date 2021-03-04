@@ -5,7 +5,7 @@
 
 
 Team::Team() : id(0), members(), score(0), size(0) {}
-Team::Team(int theId, std::vector<Player*> theMembers, int theSize) : id(theId), members(theMembers), size(theSize) {}
+Team::Team(int theId, std::vector<Player*> theMembers, int theSize) : id(theId), members(theMembers), score(0), size(theSize) {}
 
 void Team::setId(int theId){
   id=theId;
@@ -39,4 +39,29 @@ void Team::rmMember(int theId){
   }
   members.swap(temp);
   size--;
+}
+
+
+void Team::upScore(){
+  float val;
+  for(int i=0; i<size; i++){
+      val += *(member[i]).getScore();
+  }
+  score=val;
+}
+
+int Team::getId(){
+  return id;
+}
+
+std::vector<Player*> Team::getMembers(){
+  return members;
+}
+
+float Team::getScore(){
+  return score;
+}
+
+int Team::getSize(){
+  return size;
 }

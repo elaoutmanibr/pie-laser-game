@@ -24,6 +24,12 @@ class Team
     void setScore(float theScore);
     void addMember(Player& newPlayer);
     void rmMember(int theId);
+    void upScore();
+
+    int getId();
+    std::vector<Player*> getMembers();
+    float getScore();
+    int getSize();
 
 }
 
