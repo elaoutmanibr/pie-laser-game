@@ -10,6 +10,7 @@ class Team
 {
   private:
     int id; //id of the team, 0 is the default value
+    std::string name; //name of the team
     std::vector<Player*> members; //list of players in the team
     float score;
     int size; //number of players in the team
@@ -17,9 +18,10 @@ class Team
   public:
 
     Team();
-    Team(int theId, std::vector<Player*> theMembers, int theSize);
+    Team(int theId, std::string theName, std::vector<Player*> theMembers, int theSize);
 
     void setId(int theId);
+    void setName(std::string theName);
     void setMembers(std::vector<Player*> theMembers);
     void setScore(float theScore);
     void addMember(Player* newPlayer);
@@ -27,6 +29,7 @@ class Team
     void upScore();
 
     int getId();
+    std::string getName();
     std::vector<Player*> getMembers();
     float getScore();
     int getSize();
