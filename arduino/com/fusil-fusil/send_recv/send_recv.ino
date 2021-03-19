@@ -1,5 +1,5 @@
 int receiver = 7; //Relié au capteur IR
-int emitter = 13; //Relié à la diode IR
+int emitter = 12; //Relié à la diode IR
 int trigger = 4; //Relié à la gâchette
 
 int receiverState = 0; //État mesuré actuel de la gâchette
@@ -50,6 +50,20 @@ void readBit(unsigned long highRecvDuration) {
   }
 }
 
+void readBit2(unsigned long highRecvDuration, String &recvBuffer) {
+  if (zeroDuration - e < highRecvDuration && highRecvDuration < zeroDuration + e) { //On reçoit un 0
+    recvBuffer += "0";
+  }
+  else if (oneDuration - e < highRecvDuration && highRecvDuration < oneDuration + e) { //On reçoit un 1
+    recvBuffer += "1";
+  }
+  else if (startDuration - e < highRecvDuration && highRecvDuration < startDuration + e) { //On reçoit un début de signal
+    recvBuffer = "";
+  }
+  else if (endDuration - e < highRecvDuration && highRecvDuration < endDuration + e) { //On reçoit une fin de signal
+    Serial.print(recvBuffer + "\nTransmission end\n\n");
+  }
+}
 
 
 //Envoi de 0, 1, début de message, fin de message
