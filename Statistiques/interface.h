@@ -11,9 +11,9 @@
 #include "statsEquipe.h"
 
 
-void writeStats(ofstream file, Player player);
+void writeStatsPerso(std::ofstream file, Player player);
 
-
+void writeStatsTeam(std::ofstream file, Team team);
 
 
 #endif
