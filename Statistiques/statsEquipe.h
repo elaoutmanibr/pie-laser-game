@@ -19,6 +19,7 @@ class Team
 
     Team();
     Team(int theId, std::string theName, std::vector<Player*> theMembers, int theSize);
+    ~Team();
 
     void setId(int theId);
     void setName(std::string theName);

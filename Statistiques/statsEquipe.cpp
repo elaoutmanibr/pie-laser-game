@@ -7,6 +7,10 @@
 
 Team::Team() : id(0), members(), score(0), size(0) {}
 Team::Team(int theId, std::string theName, std::vector<Player*> theMembers, int theSize) : id(theId), name(theName), members(theMembers), score(0), size(theSize) {}
+Team::~Team(){
+  members.resize(0);
+  members.shrink_to_fit();
+}
 
 void Team::setId(int theId){
   id=theId;
