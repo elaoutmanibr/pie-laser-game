@@ -22,12 +22,18 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN         9           // Configurable, see typical pin layout above
-#define SS_PIN          10          // Configurable, see typical pin layout above
-#define BUZZER          4
+#define RST_PIN         9           // Pins du lecteur RFID
+#define SS_PIN          10
+#define BUZZER          4           // Pin du buzzer
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
 
+//*****************************************************************************************//
+
+/**
+* Function to buzz the buzzer at 10Hz for 100ms
+* We could add the frequency and time as parameters
+*/
 void buzz(){
   tone(BUZZER,10);
   delay(100);
@@ -35,15 +41,17 @@ void buzz(){
 }
 
 //*****************************************************************************************//
+
 void setup() {
   Serial.begin(9600);                                           // Initialize serial communications with the PC
   SPI.begin();                                                  // Init SPI bus
   mfrc522.PCD_Init();                                              // Init MFRC522 card
-  Serial.println(F("Read personal data on a MIFARE PICC:"));    //shows in serial that it is ready to read
-  pinMode(BUZZER, OUTPUT);
+  Serial.println(F("Read personal data on a MIFARE PICC:"));    //shows in serial that it is ready to read ! pas nécessaire
+  pinMode(BUZZER, OUTPUT);                                      // Initialize buzzer
 }
 
 //*****************************************************************************************//
+
 void loop() {
 
   // Prepare key - all keys are set to FFFFFFFFFFFFh at chip delivery from the factory.
@@ -68,11 +76,11 @@ void loop() {
   }
 
   Serial.println(F("**Card Detected:**"));
-  buzz();
+  buzz();                                           // We buzz when a card is detected
 
-  //-------------------------------------------
+  //-------------------------------------------      Section to test some details about the card
 
-  mfrc522.PICC_DumpDetailsToSerial(&(mfrc522.uid)); //dump some details about the card
+  //mfrc522.PICC_DumpDetailsToSerial(&(mfrc522.uid)); //dump some details about the card
 
   //mfrc522.PICC_DumpToSerial(&(mfrc522.uid));      //uncomment this to see all blocks in hex
 
@@ -85,7 +93,7 @@ void loop() {
   block = 4;
   len = 18;
 
-  //------------------------------------------- GET FIRST NAME
+  //------------------------------------------- GET FIRST NAME written in block 4 or line 1 of sector 1 in "Mifare classic tool"
   status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 4, &key, &(mfrc522.uid)); //line 834 of MFRC522.cpp file
   if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Authentication failed: "));
@@ -93,7 +101,7 @@ void loop() {
     return;
   }
 
-  status = mfrc522.MIFARE_Read(block, buffer1, &len);
+  status = mfrc522.MIFARE_Read(block, buffer1, &len);       //adds the read data in buffer1
   if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Reading failed: "));
     Serial.println(mfrc522.GetStatusCodeName(status));
@@ -108,9 +116,9 @@ void loop() {
       Serial.write(buffer1[i]);
     }
   }
-  Serial.print(" is the first name and the last name is ");
+  Serial.print(" ");
 
-  //---------------------------------------- GET LAST NAME
+  //---------------------------------------- GET LAST NAME written in block 1 or line 2 of sector 0 in "Mifare classic tool"
 
   byte buffer2[18];
   block = 1;
@@ -122,7 +130,7 @@ void loop() {
     return;
   }
 
-  status = mfrc522.MIFARE_Read(block, buffer2, &len);
+  status = mfrc522.MIFARE_Read(block, buffer2, &len);       //adds the read data in buffer2
   if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Reading failed: "));
     Serial.println(mfrc522.GetStatusCodeName(status));
@@ -144,4 +152,5 @@ void loop() {
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
 }
+
 //*****************************************************************************************//
