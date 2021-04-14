@@ -15,6 +15,7 @@ bool currentSendState = 0; //Si l'émetteur est actuellement allumé
 
 //Format standard message : "s******e", * = 0 ou 1
 String id = "s1010e"; //Message test
+String msgBuffer = ""; //Buffer de réception
 
 unsigned long recvChrono; //Chronomètre en réception
 unsigned long sendChrono; //Chronomètre en envoi
@@ -151,8 +152,13 @@ void checkReceiver() {
   else if (receiverState == 0) { //On ne capte pas de signal
     if (lastReceiverState == 1) { //Front descendant
       highRecvDuration = micros() - recvChrono; //Mesure du temps en signal haut
-      readBit(highRecvDuration); //Interprétation du bit reçu
+      readBit2(highRecvDuration, msgBuffer); //Interprétation du bit reçu
       lastReceiverState = 0;
+    }
+    else {
+      if (micros() - recvChrono > 2e6) { //Si on ne capte rien pendant plus de 2 secondes
+        msgBuffer = ""; //On réinitialise le buffer de réception
+      }
     }
   }
 }
