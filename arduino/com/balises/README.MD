@@ -12,6 +12,8 @@ Pour la partie radio, on va utiliser les mêmes modules qu'avec les interfaces a
 
 Pour la partie lecteur RFID, on va coller des stickers RFID sur les interfaces (`Mifare Classic 1k`) et on écrit le numéro du fusil dans le bloc 1 du sticker. On utilise l'application `Mifare Classic Tools` pour écrire sur les stickers et vérifier les données. On a ensuite le lecteur connecté à l'Arduino qui utilise sa bibliotèque officielle afin de lire les stickers.
 
+Pour la batterie, la consommation est estimée à environ 100 mA ce qui nous pousse à prendre une batterie de plus de 1000mAh pour avoir une autonomie largement supérieur à 2h. On prends des batteries Li-Po car elles sont relativement compactes pour la capacité requise. Il faut une batterie à 2 cellules pour passer au dessus des 5V mais rester sous les 9V. On branchera ensuite la batterie sur le port jack de l'Arduino. Un montage supplémentaire pourrait être effectué pour surveiller le niveau de la batterie.
+
 ## II. Branchements
 Le schéma du cablage a été fait sur `Fritzing` avec un module complémentaire pour mettre le lecteur RFID que l'on peut trouver dans le dossier `./doc`.
 
