@@ -1,0 +1,121 @@
+# depslib dependency file v1.0
+1588560390 source:c:\users\user\desktop\menu\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+
+1618311038 source:c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+
+1618329179 source:c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\src\mode_jeu.cpp
+	"mode_jeu.h"
+
+1618329527 c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\include\mode_jeu.h
+	"equipe.h"
+
+1618328568 source:c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\src\joueur.cpp
+	"joueur.h"
+
+1618574990 c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\include\joueur.h
+	<string>
+
+1618328632 source:c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\src\equipe.cpp
+	"equipe.h"
+
+1618316284 c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\include\equipe.h
+	"joueur.h"
+	<vector>
+
+1618329255 source:c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\src\match_a_mort.cpp
+	"match_a_mort.h"
+
+1618329597 c:\users\user\desktop\enit\1atel2\2eme semestre\travail mini projet c++\menu\include\match_a_mort.h
+	"mode_jeu.h"
+
+1618343440 source:c:\users\user\desktop\cpp\menu\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+
+1620175361 source:c:\users\user\desktop\cpp\menu\src\baseequipe.cpp
+	"baseEquipe.h"
+
+1620175330 c:\users\user\desktop\cpp\menu\include\baseequipe.h
+	"position.h"
+
+1620176137 source:c:\users\user\desktop\cpp\menu\src\match_a_mort.cpp
+	"match_a_mort.h"
+
+1620176137 c:\users\user\desktop\cpp\menu\include\match_a_mort.h
+	"mode_jeu.h"
+	"baseEquipe.h"
+	<algorithm>
+	<vector>
+
+1620176013 c:\users\user\desktop\cpp\menu\include\mode_jeu.h
+	"equipe.h"
+	"action.h"
+	"joueur.h"
+
+1620174126 c:\users\user\desktop\cpp\menu\include\equipe.h
+	"joueur.h"
+	"baseEquipe.h"
+	<vector>
+	<algorithm>
+
+1620175201 c:\users\user\desktop\cpp\menu\include\joueur.h
+	<string>
+	"action.h"
+	"bouger.h"
+	"tirer.h"
+	"position.h"
+
+1620174171 source:c:\users\user\desktop\cpp\menu\src\equipe.cpp
+	"equipe.h"
+
+1620173551 source:c:\users\user\desktop\cpp\menu\src\joueur.cpp
+	"joueur.h"
+
+1620174920 source:c:\users\user\desktop\cpp\menu\src\mode_jeu.cpp
+	"mode_jeu.h"
+
+1620173842 source:c:\users\user\desktop\cpp\menu\src\jeu.cpp
+	"jeu.h"
+
+1620170183 c:\users\user\desktop\cpp\menu\include\jeu.h
+	"equipe.h"
+	"joueur.h"
+	"mode_jeu.h"
+	"match_a_mort.h"
+
+1620176513 c:\users\user\desktop\cpp\menu\include\action.h
+
+1620167615 source:c:\users\user\desktop\cpp\menu\src\action.cpp
+	"action.h"
+
+1620173185 source:c:\users\user\desktop\cpp\menu\src\bouger.cpp
+	"bouger.h"
+
+1620173120 c:\users\user\desktop\cpp\menu\include\bouger.h
+	"action.h"
+	"position.h"
+
+1620169080 c:\users\user\desktop\cpp\menu\include\tirer.h
+	"action.h"
+
+1620168940 source:c:\users\user\desktop\cpp\menu\src\tirer.cpp
+	"tirer.h"
+
+1620172637 c:\users\user\desktop\cpp\menu\include\position.h
+
+1620172922 source:c:\users\user\desktop\cpp\menu\src\position.cpp
+	"position.h"
+
