@@ -1,5 +1,5 @@
-/* #include <RH_ASK.h> */
-/* #include <SPI.h> */
+#include <RH_ASK.h>
+#include <SPI.h>
 
 int receiver = 7; //Relié au capteur IR
 int emitter = 12; //Relié à la diode IR
