@@ -1,6 +1,13 @@
+/* #include <RH_ASK.h> */
+/* #include <SPI.h> */
+
 int receiver = 7; //Relié au capteur IR
 int emitter = 12; //Relié à la diode IR
 int trigger = 4; //Relié à la gâchette
+
+int rc_receiver = 9;
+int rc_emitter = 10;
+RH_ASK rc;
 
 int receiverState = 0; //État mesuré actuel de la gâchette
 int lastReceiverState = 0; //Dernier état mesuré de la gâchette
@@ -14,7 +21,15 @@ int currentSendStep = 0; //Indice du bit en train d'être émis dans le message
 bool currentSendState = 0; //Si l'émetteur est actuellement allumé
 
 //Format standard message : "s******e", * = 0 ou 1
-String id = "s1010e"; //Message test
+uint8_t id = 59;
+
+String id_string;
+id_string[0] = 's';
+for (int8_t i = 7; i >= 0; i--) {
+  id_string[8 - i] = ((id & 1 << i) >> i) + 48;
+}
+id_string[9] = 'e';
+
 String msgBuffer = ""; //Buffer de réception
 
 unsigned long recvChrono; //Chronomètre en réception
@@ -33,6 +48,12 @@ unsigned int freq = 56000;
 //Tolérance dans la durée des impulsions reçues (µs)
 unsigned int e = 250;
 
+typedef struct msg_t {
+  uint8_t destination;
+  uint8_t source;
+  uint8_t type;
+  uint8_t args[5];
+} message;
 
 
 //Interprétation du bit reçu en fonction de la durée du signal mesuré en position haute
@@ -163,6 +184,37 @@ void checkReceiver() {
   }
 }
 
+// Renvoie un pointeur vers le message correspondant au signal. Si aucun message n'est reçu, il renvoie NULL.
+message* checkRC() {
+  uint8_t buflen = 8; // Format : destination_id (0-255), source_id (0-255), msg_type (0-255), up to 5 arguments (depending on the type of message)
+  uint8_t buf[buflen];
+
+  if (rc.recv(buf, &buflen)) {
+    message* res = malloc(sizeof(message));
+    res -> destination = buf[0],
+    res -> source = buf[1],
+    res -> type = buf[2]
+    for (uint8_t i = 0; i < 5; i++) {
+      res -> args[i] = buf[i + 3];
+    }
+    return res;
+  }
+  return NULL;
+}
+
+// Envoie le message correspondant
+void sendRC(message* msg) {
+  uint8_t buflen = 8;
+  uint8_t buf[buflen];
+
+  buf[0] = msg -> destination;
+  buf[1] = id;
+  buf[2] = msg -> type;
+  for (uint8_t i = 0; i < 5; i++)
+    buf[i + 3] = (msg -> args)[i];
+
+  rc.send(buf, buflen);
+}
 
 
 //Initialisation
@@ -170,6 +222,9 @@ void setup() {
   pinMode(receiver, INPUT);
   pinMode(emitter, OUTPUT);
   pinMode(trigger, INPUT);
+  // Initialisation de la partie radio
+  if (!rc.init())
+    Serial.print("Error: Module Radio non initialisé");
   Serial.begin(9600); //Initialisation de la communication texte
 }
 
@@ -180,6 +235,6 @@ void loop() {
   checkReceiver(); //Détection de tir/message entrant
   checkTrigger(); //Détection d'appui sur la gâchette
   if (isSendingPacket) {
-    sendPacket(emitter, id); //Envoi de messages
+    sendPacket(emitter, id_string); //Envoi de messages
   }
 }
