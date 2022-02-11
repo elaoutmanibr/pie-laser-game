@@ -11,5 +11,8 @@ import serial.tools.list_ports
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
    
 while True:
-	message = input('Ecrivez le nombre de clignotements desire (1-9)')
-	arduino.write(str(message))   # envoi du message série
+	message = str(input('message: '))
+	arduino.write(message.encode())   # envoi du message série
+	feedback = arduino.readline()[:-2]
+	if feedback:
+		print(feedback)

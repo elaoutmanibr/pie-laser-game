@@ -12,7 +12,6 @@ arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 while True:
 	answer=str(arduino.readline())
-	if (answer):
-		print(answer,"/n")
+	print(answer)
 
 

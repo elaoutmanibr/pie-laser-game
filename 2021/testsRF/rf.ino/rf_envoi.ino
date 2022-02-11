@@ -1,13 +1,16 @@
 #include <VirtualWire.h>
 
+int RF_TX_PIN = 9;
+
 void setup() {
   Serial.begin(9600);
 
   // Initialisation de la bibliothèque VirtualWire
   // Vous pouvez changez les broches RX/TX/PTT avant vw_setup() si nécessaire
+  vw_set_tx_pin(RF_TX_PIN);
   vw_setup(2000);
   
-  Serial.println("Go !"); 
+  //Serial.println("Go !"); 
 }
  
 void loop() {
@@ -23,4 +26,5 @@ void loop() {
   
   vw_send(message, len + 1); // On envoie le message
   vw_wait_tx(); // On attend la fin de l'envoi
+  Serial.println("Sent");
 } 
