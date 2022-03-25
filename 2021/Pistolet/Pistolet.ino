@@ -1,5 +1,8 @@
 #include <LiquidCrystal_I2C.h>
 #include <VirtualWire.h>
+#include <IRremote.h> // Referring to the IRRemote function library, the header file 
+                        //has defined PIN 3 as the signal output, so it can only connect 
+                        //to PIN 3. If change, please change it in the header file
 
 byte ID = 0; // identifiant du pistolet
 byte hits_recv =0 ;
