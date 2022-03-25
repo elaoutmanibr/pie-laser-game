@@ -1,6 +1,6 @@
 #include <LiquidCrystal_I2C.h>
 #include <VirtualWire.h>
-#include <IRremote.h> // Referring to the IRRemote function library, the header file 
+//#include <IRremote.h> // Referring to the IRRemote function library, the header file 
                         //has defined PIN 3 as the signal output, so it can only connect 
                         //to PIN 3. If change, please change it in the header file
 
