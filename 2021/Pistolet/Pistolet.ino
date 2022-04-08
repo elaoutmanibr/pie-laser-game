@@ -1,8 +1,9 @@
 #include <LiquidCrystal_I2C.h>
 #include <VirtualWire.h>
-//#include <IRremote.h> // Referring to the IRRemote function library, the header file 
+#include <IRremote.h> // Referring to the IRRemote function library, the header file 
                         //has defined PIN 3 as the signal output, so it can only connect 
                         //to PIN 3. If change, please change it in the header file
+IRsend irsend;
 
 byte ID = 0; // identifiant du pistolet
 byte hits_recv =0 ;
@@ -29,26 +30,35 @@ void setup(){
 }
 
 void loop() {
-  if (vw_get_message(message, &size_msg) && message[0]==ID && message[1]==20) { // 20 : code paralysie
-    // Affichage paralysie
-    delay(15*1000);
-    // Feu vert !!
-    response[0]=17; // code fin paralysie
-    response[1]=ID;
-    response[2]=255; // null, ne vas être lu
+  if (vw_get_message(message, &size_msg) ){
+    if  (message[0]==ID && message[1]==20) { // 20 : code paralysie
+      // Affichage paralysie
+      digitalWrite(3,HIGH);
+      delay(15*1000);
+      digitalWrite(3,LOW);
+      // Feu vert !!
+      response[0]=17; // code fin paralysie
+      response[1]=ID;
+      response[2]=255; // null, ne vas être lu
 
-    vw_send(response, 3);
-    vw_wait_tx(); // attendre la fin de l'envoi
+      vw_send(response, 3);
+      vw_wait_tx(); // attendre la fin de l'envoi
 
-  }
+  }}
 
   if (digitalRead(buttonPin) == HIGH) { // si le bouton hit recieved est appuyé dans la simulation
       response[0]=16; // code hit recieved
       response[1]=ID;
       response[2]=1; // id attaquant
-
+      
       vw_send(response, 3);
       vw_wait_tx(); // attendre la fin de l'envoi
-
+      //delay(15*1000);
   }
+  
+  // https://osoyoo.com/2017/11/05/infrared/
+  // if (){ 
+  //   irsend.sendNEC(0xFF02FD, 32); // on tire *à modifier* 
+  //   delay(2000); 
+  // }
 }
