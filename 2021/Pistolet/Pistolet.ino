@@ -3,6 +3,8 @@
 #include <IRremote.h> // Referring to the IRRemote function library, the header file 
                         //has defined PIN 3 as the signal output, so it can only connect 
                         //to PIN 3. If change, please change it in the header file
+
+                    // v 2.0.1
 IRsend irsend;
 
 
@@ -25,6 +27,8 @@ byte response[3];
 void setup(){
   lcd.init();
   lcd.backlight();
+  pinMode(buttonPin, OUTPUT);
+  pinMode(gachette, OUTPUT);
   vw_set_rx_pin(RF_RX_PIN);
   vw_set_tx_pin(RF_TX_PIN);
   vw_setup(2000);
@@ -37,6 +41,7 @@ void setup(){
 }
 
 void loop() {
+  
   if (vw_get_message(message, &size_msg) ){
     if  (message[0]==ID && message[1]==20) { // 20 : code paralysie
       // Affichage paralysie
@@ -65,13 +70,16 @@ void loop() {
 
   if (digitalRead(gachette)==HIGH){
     irsend.sendNEC(0xFFFFF, 32);
-    delay(10000);
+    delay(3000);
   }
 
+  
+  
   if (irrecv.decode(&irmsg)) {
     Serial.println(irmsg.value, HEX);
     irrecv.resume(); // Receive the next value
   }
+  
   
   // https://osoyoo.com/2017/11/05/infrared/
   // if (){ 
