@@ -5,13 +5,19 @@
                         //to PIN 3. If change, please change it in the header file
 IRsend irsend;
 
+
+int RECV_PIN = 11;
+IRrecv irrecv (RECV_PIN);
+decode_results irmsg;
+
 byte ID = 0; // identifiant du pistolet
 byte hits_recv =0 ;
 
 LiquidCrystal_I2C lcd(0x27,16,2); // set the LCD address to 0x27 for a 16 chars and 2 line display
 int RF_RX_PIN = 10;
 int RF_TX_PIN = 12;
-const int buttonPin = 4;   
+const int buttonPin = 4;
+const int gachette = 7;
 byte message[3];
 byte size_msg =3;
 byte response[3];
@@ -23,6 +29,7 @@ void setup(){
   vw_set_tx_pin(RF_TX_PIN);
   vw_setup(2000);
   vw_rx_start();
+  irrecv.enableIRIn();
 
   lcd.print("Bienvenue au");
   lcd.setCursor(0,1);         //Display position
@@ -54,6 +61,16 @@ void loop() {
       vw_send(response, 3);
       vw_wait_tx(); // attendre la fin de l'envoi
       //delay(15*1000);
+  }
+
+  if (digitalRead(gachette)==HIGH){
+    irsend.sendNEC(0xFFFFF, 32);
+    delay(10000);
+  }
+
+  if (irrecv.decode(&irmsg)) {
+    Serial.println(irmsg.value, HEX);
+    irrecv.resume(); // Receive the next value
   }
   
   // https://osoyoo.com/2017/11/05/infrared/
