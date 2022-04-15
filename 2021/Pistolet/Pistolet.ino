@@ -8,7 +8,7 @@
 IRsend irsend;
 
 
-int RECV_PIN = 11;
+int RECV_PIN = 6;
 IRrecv irrecv (RECV_PIN);
 decode_results irmsg;
 
@@ -58,7 +58,10 @@ void loop() {
 
   }}
 
-  if (digitalRead(buttonPin) == HIGH) { // si le bouton hit recieved est appuyé dans la simulation
+  if (irrecv.decode(&irmsg)) { // si le bouton hit recieved est appuyé dans la simulation
+      byte id_att = irmsg.value;
+      irrecv.resume(); // Receive the next value
+
       response[0]=16; // code hit recieved
       response[1]=ID;
       response[2]=1; // id attaquant
@@ -73,17 +76,4 @@ void loop() {
     delay(3000);
   }
 
-  
-  
-  if (irrecv.decode(&irmsg)) {
-    Serial.println(irmsg.value, HEX);
-    irrecv.resume(); // Receive the next value
-  }
-  
-  
-  // https://osoyoo.com/2017/11/05/infrared/
-  // if (){ 
-  //   irsend.sendNEC(0xFF02FD, 32); // on tire *à modifier* 
-  //   delay(2000); 
-  // }
 }
